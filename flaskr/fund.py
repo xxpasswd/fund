@@ -103,7 +103,7 @@ def get_all_funds():
     funds = get_db().execute(
         'SELECT id, code, is_monitor, datetime(add_time,"localtime") as add_time, datetime(update_time, "localtime") as update_time'
         ' FROM fund'
-        ' ORDER BY update_time desc').fetchall()
+        ' ORDER BY  is_monitor desc, update_time desc').fetchall()
 
     return funds
 
