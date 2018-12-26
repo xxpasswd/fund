@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">code</th>
+          <th scope="col">is_monitor</th>
+          <th scope="col">update_time</th>
+            <th scope="col">operation</th>
+            <th scope="col">chart</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for fund in funds %}
+          <tr>
+          <th scope="row">{{ loop.index }}</th>
+          <td>{{ fund['code'] }}</td>
+          <td>{{ fund['is_monitor'] }}</td>
+          <td>{{ fund['update_time'] }}</td>
+              <td><a href="{{ url_for('fund.edit', id=fund['id']) }}">edit</a></td>
+            <td><a href="{{ url_for('fund.fund_chart', code=fund['code']) }}">view</a></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+{% endblock %}

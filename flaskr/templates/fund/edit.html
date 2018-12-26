@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="post">
+      <div class="form-group">
+        <label for="exampleInputEmail1">code</label>
+        <input type="text" name="code" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{ fund['code'] }}" disabled>
+      </div>
+      <div class="form-group form-check">
+        <input type="checkbox" class="form-check-input" name="is_monitor" id="exampleCheck1" value="1" {% if fund['is_monitor'] %}checked{% endif %}>
+        <label class="form-check-label" for="exampleCheck1">是否监控</label>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <form action="{{ url_for('fund.delete', id=fund['id']) }}" method="post">
+        <button class="btn btn-danger" type="submit" value="Delete" onclick="return confirm('Are you sure?');">Delete</button>
+    </form>
+{% endblock %}
