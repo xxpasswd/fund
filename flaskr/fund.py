@@ -1,15 +1,18 @@
 # coding: utf-8
 import re
 import datetime
+import os
 
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
+from werkzeug.contrib.cache import FileSystemCache
 import requests
 
 from flaskr.auth import login_required
 from flaskr.db import get_db
 
 bp = Blueprint('fund', __name__)
+cache = FileSystemCache('cache')
 
 
 @bp.route('/')
@@ -84,10 +87,19 @@ def fund_chart():
         return render_template('fund/chart.html', data=data)
     else:
         funds = get_all_funds()
+        data = get_chart_data(funds)
+        return render_template('fund/chart.html', data=data)
+
+
+def get_chart_data(funds):
+    data = cache.get('data')
+    if data is None:
+        data = {}
         for i in funds:
             x, y = get_fund_data(i['code'])
             data[i['code']] = {'x': x, 'y': y}
-        return render_template('fund/chart.html', data=data)
+        cache.set('data', data, 2*60*60)
+    return data
 
 
 def get_fund(id):
