@@ -35,6 +35,9 @@
                 <a class="nav-link" href="{{ url_for('auth.login') }}">Log In</a>
             </li>
         {% endif %}
+        <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('fund.clear_cache') }}" onclick="return confirm('Are you sure clear cache?')">clear</a>
+        </li>
     </ul>
     {% for message in get_flashed_messages() %}
         <div class="alert alert-warning alert-dismissible fade show" role="alert">

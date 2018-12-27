@@ -91,13 +91,21 @@ def fund_chart():
         return render_template('fund/chart.html', data=data)
 
 
+@bp.route('/clear_cache')
+@login_required
+def clear_cache():
+    cache.clear()
+    flash('cache cleared')
+    return redirect(url_for('index'))
+
+
 def get_chart_data(funds):
     data = cache.get('data')
     if data is None:
         data = {}
-        for i in funds:
-            x, y = get_fund_data(i['code'])
-            data[i['code']] = {'x': x, 'y': y}
+        for fund in funds:
+            x, y = get_fund_data(fund['code'])
+            data[fund['code']] = {'x': x, 'y': y}
         cache.set('data', data, 2*60*60)
     return data
 
