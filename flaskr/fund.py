@@ -5,14 +5,13 @@ import os
 
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 from werkzeug.exceptions import abort
-from werkzeug.contrib.cache import FileSystemCache
 import requests
 
 from flaskr.auth import login_required
 from flaskr.db import get_db
+from flaskr.cacher import cache
 
 bp = Blueprint('fund', __name__)
-cache = FileSystemCache('cache')
 
 
 @bp.route('/')
