@@ -26,8 +26,7 @@ def create_app(test_config=None):
     db.init_app(app)
 
     from . import cacher
-    with app.app_context():
-        cacher.init_cache()
+    cacher.init_cache(app)
 
     from . import auth
     app.register_blueprint(auth.bp)

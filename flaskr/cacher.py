@@ -5,6 +5,7 @@ from werkzeug.contrib.cache import FileSystemCache
 cache = None
 
 
-def init_cache():
+def init_cache(app):
     global cache
-    cache = FileSystemCache(current_app.config['CACHE_DIR'])
+    with app.app_context():
+        cache = FileSystemCache(current_app.config['CACHE_DIR'])
